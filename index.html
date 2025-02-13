@@ -1,0 +1,2379 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000042gdbtable_1.js"></script>
+        <script src="data/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000041gdbtable_2.js"></script>
+        <script src="data/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003egdbtable_3.js"></script>
+        <script src="data/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003agdbtable_4.js"></script>
+        <script src="data/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000039gdbtable_5.js"></script>
+        <script src="data/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000038gdbtable_6.js"></script>
+        <script src="data/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000036gdbtable_7.js"></script>
+        <script src="data/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000034gdbtable_8.js"></script>
+        <script src="data/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000033gdbtable_9.js"></script>
+        <script src="data/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000032gdbtable_10.js"></script>
+        <script src="data/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000031gdbtable_11.js"></script>
+        <script src="data/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002dgdbtable_12.js"></script>
+        <script src="data/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002cgdbtable_13.js"></script>
+        <script src="data/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002agdbtable_14.js"></script>
+        <script src="data/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000028gdbtable_15.js"></script>
+        <script src="data/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000027gdbtable_16.js"></script>
+        <script src="data/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000026gdbtable_17.js"></script>
+        <script src="data/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000025gdbtable_18.js"></script>
+        <script src="data/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000024gdbtable_19.js"></script>
+        <script src="data/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000020gdbtable_20.js"></script>
+        <script src="data/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000001bgdbtable_21.js"></script>
+        <script src="data/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000015gdbtable_22.js"></script>
+        <script src="data/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000000egdbtable_23.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString' || e.target.feature.geometry.type === 'MultiLineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+            highlightLayer.openPopup();
+        }
+        var map = L.map('map', {
+            zoomControl:false, maxZoom:28, minZoom:1
+        }).fitBounds([[-6.88749342884582,106.8779776041986],[-6.362493587844688,107.87202239980125]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        // remove popup's row if "visible-with-data"
+        function removeEmptyRowsFromPopupContent(content, feature) {
+         var tempDiv = document.createElement('div');
+         tempDiv.innerHTML = content;
+         var rows = tempDiv.querySelectorAll('tr');
+         for (var i = 0; i < rows.length; i++) {
+             var td = rows[i].querySelector('td.visible-with-data');
+             var key = td ? td.id : '';
+             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                 rows[i].parentNode.removeChild(rows[i]);
+             }
+         }
+         return tempDiv.innerHTML;
+        }
+        // add class to format popup if it contains media
+		function addClassToPopupIfMedia(content, popup) {
+			var tempDiv = document.createElement('div');
+			tempDiv.innerHTML = content;
+			if (tempDiv.querySelector('td img')) {
+				popup._contentNode.classList.add('media');
+					// Delay to force the redraw
+					setTimeout(function() {
+						popup.update();
+					}, 10);
+			} else {
+				popup._contentNode.classList.remove('media');
+			}
+		}
+        var zoomControl = L.control.zoom({
+            position: 'topleft'
+        }).addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_OpenStreetMap_0');
+        map.getPane('pane_OpenStreetMap_0').style.zIndex = 400;
+        var layer_OpenStreetMap_0 = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OpenStreetMap_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OpenStreetMap_0;
+        map.addLayer(layer_OpenStreetMap_0);
+        function pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000042gdbtable_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? autolinker.link(feature.properties['FCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? autolinker.link(feature.properties['REMARK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? autolinker.link(feature.properties['METADATA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? autolinker.link(feature.properties['SRS_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JNSPDG'] !== null ? autolinker.link(feature.properties['JNSPDG'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAYER'] !== null ? autolinker.link(feature.properties['LAYER'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Length'] !== null ? autolinker.link(feature.properties['SHAPE_Length'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Area'] !== null ? autolinker.link(feature.properties['SHAPE_Area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000042gdbtable_1_0() {
+            return {
+                pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000042gdbtable_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(125,139,143,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000042gdbtable_1');
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000042gdbtable_1').style.zIndex = 401;
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000042gdbtable_1').style['mix-blend-mode'] = 'normal';
+        var layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000042gdbtable_1 = new L.geoJson(json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000042gdbtable_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000042gdbtable_1',
+            layerName: 'layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000042gdbtable_1',
+            pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000042gdbtable_1',
+            onEachFeature: pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000042gdbtable_1,
+            style: style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000042gdbtable_1_0,
+        });
+        bounds_group.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000042gdbtable_1);
+        map.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000042gdbtable_1);
+        function pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000041gdbtable_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? autolinker.link(feature.properties['FCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? autolinker.link(feature.properties['REMARK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? autolinker.link(feature.properties['METADATA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? autolinker.link(feature.properties['SRS_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TKTHLR'] !== null ? autolinker.link(feature.properties['TKTHLR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAYER'] !== null ? autolinker.link(feature.properties['LAYER'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Length'] !== null ? autolinker.link(feature.properties['SHAPE_Length'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Area'] !== null ? autolinker.link(feature.properties['SHAPE_Area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000041gdbtable_2_0() {
+            return {
+                pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000041gdbtable_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(196,60,57,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000041gdbtable_2');
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000041gdbtable_2').style.zIndex = 402;
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000041gdbtable_2').style['mix-blend-mode'] = 'normal';
+        var layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000041gdbtable_2 = new L.geoJson(json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000041gdbtable_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000041gdbtable_2',
+            layerName: 'layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000041gdbtable_2',
+            pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000041gdbtable_2',
+            onEachFeature: pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000041gdbtable_2,
+            style: style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000041gdbtable_2_0,
+        });
+        bounds_group.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000041gdbtable_2);
+        map.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000041gdbtable_2);
+        function pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003egdbtable_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? autolinker.link(feature.properties['FCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? autolinker.link(feature.properties['REMARK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? autolinker.link(feature.properties['METADATA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? autolinker.link(feature.properties['SRS_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JNSSWH'] !== null ? autolinker.link(feature.properties['JNSSWH'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TNMSWH'] !== null ? autolinker.link(feature.properties['TNMSWH'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAYER'] !== null ? autolinker.link(feature.properties['LAYER'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Length'] !== null ? autolinker.link(feature.properties['SHAPE_Length'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Area'] !== null ? autolinker.link(feature.properties['SHAPE_Area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003egdbtable_3_0() {
+            return {
+                pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003egdbtable_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(141,90,153,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003egdbtable_3');
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003egdbtable_3').style.zIndex = 403;
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003egdbtable_3').style['mix-blend-mode'] = 'normal';
+        var layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003egdbtable_3 = new L.geoJson(json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003egdbtable_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003egdbtable_3',
+            layerName: 'layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003egdbtable_3',
+            pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003egdbtable_3',
+            onEachFeature: pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003egdbtable_3,
+            style: style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003egdbtable_3_0,
+        });
+        bounds_group.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003egdbtable_3);
+        map.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003egdbtable_3);
+        function pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003agdbtable_4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? autolinker.link(feature.properties['FCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? autolinker.link(feature.properties['REMARK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? autolinker.link(feature.properties['METADATA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? autolinker.link(feature.properties['SRS_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003agdbtable_4_0() {
+            return {
+                pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003agdbtable_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(190,207,80,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003agdbtable_4');
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003agdbtable_4').style.zIndex = 404;
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003agdbtable_4').style['mix-blend-mode'] = 'normal';
+        var layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003agdbtable_4 = new L.geoJson(json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003agdbtable_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003agdbtable_4',
+            layerName: 'layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003agdbtable_4',
+            pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003agdbtable_4',
+            onEachFeature: pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003agdbtable_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003agdbtable_4_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003agdbtable_4);
+        map.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003agdbtable_4);
+        function pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000039gdbtable_5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? autolinker.link(feature.properties['FCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? autolinker.link(feature.properties['REMARK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? autolinker.link(feature.properties['METADATA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? autolinker.link(feature.properties['SRS_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DAYA'] !== null ? autolinker.link(feature.properties['DAYA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PSSKBL'] !== null ? autolinker.link(feature.properties['PSSKBL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Length'] !== null ? autolinker.link(feature.properties['SHAPE_Length'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000039gdbtable_5_0() {
+            return {
+                pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000039gdbtable_5',
+                opacity: 1,
+                color: 'rgba(183,72,75,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000039gdbtable_5');
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000039gdbtable_5').style.zIndex = 405;
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000039gdbtable_5').style['mix-blend-mode'] = 'normal';
+        var layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000039gdbtable_5 = new L.geoJson(json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000039gdbtable_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000039gdbtable_5',
+            layerName: 'layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000039gdbtable_5',
+            pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000039gdbtable_5',
+            onEachFeature: pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000039gdbtable_5,
+            style: style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000039gdbtable_5_0,
+        });
+        bounds_group.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000039gdbtable_5);
+        map.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000039gdbtable_5);
+        function pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000038gdbtable_6(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? autolinker.link(feature.properties['FCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? autolinker.link(feature.properties['REMARK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? autolinker.link(feature.properties['METADATA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? autolinker.link(feature.properties['SRS_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JNKPOS'] !== null ? autolinker.link(feature.properties['JNKPOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000038gdbtable_6_0() {
+            return {
+                pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000038gdbtable_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(141,90,153,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000038gdbtable_6');
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000038gdbtable_6').style.zIndex = 406;
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000038gdbtable_6').style['mix-blend-mode'] = 'normal';
+        var layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000038gdbtable_6 = new L.geoJson(json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000038gdbtable_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000038gdbtable_6',
+            layerName: 'layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000038gdbtable_6',
+            pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000038gdbtable_6',
+            onEachFeature: pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000038gdbtable_6,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000038gdbtable_6_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000038gdbtable_6);
+        map.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000038gdbtable_6);
+        function pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000036gdbtable_7(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? autolinker.link(feature.properties['FCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? autolinker.link(feature.properties['REMARK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? autolinker.link(feature.properties['METADATA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? autolinker.link(feature.properties['SRS_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000036gdbtable_7_0() {
+            return {
+                pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000036gdbtable_7',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(125,139,143,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000036gdbtable_7');
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000036gdbtable_7').style.zIndex = 407;
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000036gdbtable_7').style['mix-blend-mode'] = 'normal';
+        var layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000036gdbtable_7 = new L.geoJson(json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000036gdbtable_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000036gdbtable_7',
+            layerName: 'layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000036gdbtable_7',
+            pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000036gdbtable_7',
+            onEachFeature: pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000036gdbtable_7,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000036gdbtable_7_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000036gdbtable_7);
+        map.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000036gdbtable_7);
+        function pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000034gdbtable_8(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? autolinker.link(feature.properties['FCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? autolinker.link(feature.properties['REMARK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? autolinker.link(feature.properties['METADATA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? autolinker.link(feature.properties['SRS_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JLJTRW'] !== null ? autolinker.link(feature.properties['JLJTRW'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JMLBTG'] !== null ? autolinker.link(feature.properties['JMLBTG'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JNSTRW'] !== null ? autolinker.link(feature.properties['JNSTRW'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDBBWH'] !== null ? autolinker.link(feature.properties['KDBBWH'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDBGAT'] !== null ? autolinker.link(feature.properties['KDBGAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDLNTI'] !== null ? autolinker.link(feature.properties['KDLNTI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDTRW'] !== null ? autolinker.link(feature.properties['KDTRW'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDUTRW'] !== null ? autolinker.link(feature.properties['KDUTRW'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LBRTRW'] !== null ? autolinker.link(feature.properties['LBRTRW'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['STSINF'] !== null ? autolinker.link(feature.properties['STSINF'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TGRNBS'] !== null ? autolinker.link(feature.properties['TGRNBS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['THNPBN'] !== null ? autolinker.link(feature.properties['THNPBN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TIPTRW'] !== null ? autolinker.link(feature.properties['TIPTRW'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TBGNAT'] !== null ? autolinker.link(feature.properties['TBGNAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PJGTRW'] !== null ? autolinker.link(feature.properties['PJGTRW'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Length'] !== null ? autolinker.link(feature.properties['SHAPE_Length'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000034gdbtable_8_0() {
+            return {
+                pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000034gdbtable_8',
+                opacity: 1,
+                color: 'rgba(190,207,80,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000034gdbtable_8');
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000034gdbtable_8').style.zIndex = 408;
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000034gdbtable_8').style['mix-blend-mode'] = 'normal';
+        var layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000034gdbtable_8 = new L.geoJson(json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000034gdbtable_8, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000034gdbtable_8',
+            layerName: 'layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000034gdbtable_8',
+            pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000034gdbtable_8',
+            onEachFeature: pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000034gdbtable_8,
+            style: style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000034gdbtable_8_0,
+        });
+        bounds_group.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000034gdbtable_8);
+        map.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000034gdbtable_8);
+        function pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000033gdbtable_9(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? autolinker.link(feature.properties['FCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? autolinker.link(feature.properties['REMARK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? autolinker.link(feature.properties['METADATA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? autolinker.link(feature.properties['SRS_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DOPSTA'] !== null ? autolinker.link(feature.properties['DOPSTA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FGSSTA'] !== null ? autolinker.link(feature.properties['FGSSTA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KLSSTA'] !== null ? autolinker.link(feature.properties['KLSSTA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KMTSTA'] !== null ? autolinker.link(feature.properties['KMTSTA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KODKOD'] !== null ? autolinker.link(feature.properties['KODKOD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KONKON'] !== null ? autolinker.link(feature.properties['KONKON'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LINSTA'] !== null ? autolinker.link(feature.properties['LINSTA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WILSTA'] !== null ? autolinker.link(feature.properties['WILSTA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000033gdbtable_9_0() {
+            return {
+                pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000033gdbtable_9',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(183,72,75,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000033gdbtable_9');
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000033gdbtable_9').style.zIndex = 409;
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000033gdbtable_9').style['mix-blend-mode'] = 'normal';
+        var layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000033gdbtable_9 = new L.geoJson(json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000033gdbtable_9, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000033gdbtable_9',
+            layerName: 'layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000033gdbtable_9',
+            pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000033gdbtable_9',
+            onEachFeature: pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000033gdbtable_9,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000033gdbtable_9_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000033gdbtable_9);
+        map.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000033gdbtable_9);
+        function pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000032gdbtable_10(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? autolinker.link(feature.properties['FCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? autolinker.link(feature.properties['REMARK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? autolinker.link(feature.properties['METADATA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? autolinker.link(feature.properties['SRS_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JMLREL'] !== null ? autolinker.link(feature.properties['JMLREL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KEBREL'] !== null ? autolinker.link(feature.properties['KEBREL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KLSREL'] !== null ? autolinker.link(feature.properties['KLSREL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KMXREL'] !== null ? autolinker.link(feature.properties['KMXREL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TIPREL'] !== null ? autolinker.link(feature.properties['TIPREL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Length'] !== null ? autolinker.link(feature.properties['SHAPE_Length'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000032gdbtable_10_0() {
+            return {
+                pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000032gdbtable_10',
+                opacity: 1,
+                color: 'rgba(141,90,153,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000032gdbtable_10');
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000032gdbtable_10').style.zIndex = 410;
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000032gdbtable_10').style['mix-blend-mode'] = 'normal';
+        var layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000032gdbtable_10 = new L.geoJson(json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000032gdbtable_10, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000032gdbtable_10',
+            layerName: 'layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000032gdbtable_10',
+            pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000032gdbtable_10',
+            onEachFeature: pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000032gdbtable_10,
+            style: style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000032gdbtable_10_0,
+        });
+        bounds_group.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000032gdbtable_10);
+        map.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000032gdbtable_10);
+        function pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000031gdbtable_11(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? autolinker.link(feature.properties['FCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? autolinker.link(feature.properties['REMARK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? autolinker.link(feature.properties['METADATA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? autolinker.link(feature.properties['SRS_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['AYUJMB'] !== null ? autolinker.link(feature.properties['AYUJMB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['BTSJMB'] !== null ? autolinker.link(feature.properties['BTSJMB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DEKJMB'] !== null ? autolinker.link(feature.properties['DEKJMB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FGSJMB'] !== null ? autolinker.link(feature.properties['FGSJMB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JMLBTG'] !== null ? autolinker.link(feature.properties['JMLBTG'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDBBWH'] !== null ? autolinker.link(feature.properties['KDBBWH'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDBGAT'] !== null ? autolinker.link(feature.properties['KDBGAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDLNTI'] !== null ? autolinker.link(feature.properties['KDLNTI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDUJMB'] !== null ? autolinker.link(feature.properties['KDUJMB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LBRJMB'] !== null ? autolinker.link(feature.properties['LBRJMB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LBRTRT'] !== null ? autolinker.link(feature.properties['LBRTRT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['MATJMB'] !== null ? autolinker.link(feature.properties['MATJMB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['STRJMB'] !== null ? autolinker.link(feature.properties['STRJMB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TBGNAT'] !== null ? autolinker.link(feature.properties['TBGNAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TGGJMB'] !== null ? autolinker.link(feature.properties['TGGJMB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TGRNBS'] !== null ? autolinker.link(feature.properties['TGRNBS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['THNPBN'] !== null ? autolinker.link(feature.properties['THNPBN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TIPJMB'] !== null ? autolinker.link(feature.properties['TIPJMB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TONJMB'] !== null ? autolinker.link(feature.properties['TONJMB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['THNPNA'] !== null ? autolinker.link(feature.properties['THNPNA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Length'] !== null ? autolinker.link(feature.properties['SHAPE_Length'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000031gdbtable_11_0() {
+            return {
+                pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000031gdbtable_11',
+                opacity: 1,
+                color: 'rgba(213,180,60,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000031gdbtable_11');
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000031gdbtable_11').style.zIndex = 411;
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000031gdbtable_11').style['mix-blend-mode'] = 'normal';
+        var layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000031gdbtable_11 = new L.geoJson(json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000031gdbtable_11, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000031gdbtable_11',
+            layerName: 'layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000031gdbtable_11',
+            pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000031gdbtable_11',
+            onEachFeature: pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000031gdbtable_11,
+            style: style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000031gdbtable_11_0,
+        });
+        bounds_group.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000031gdbtable_11);
+        map.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000031gdbtable_11);
+        function pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002dgdbtable_12(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? autolinker.link(feature.properties['FCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? autolinker.link(feature.properties['REMARK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? autolinker.link(feature.properties['METADATA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? autolinker.link(feature.properties['SRS_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ARHRJL'] !== null ? autolinker.link(feature.properties['ARHRJL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['AUTRJL'] !== null ? autolinker.link(feature.properties['AUTRJL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FGSRJL'] !== null ? autolinker.link(feature.properties['FGSRJL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JARRJL'] !== null ? autolinker.link(feature.properties['JARRJL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JPARJL'] !== null ? autolinker.link(feature.properties['JPARJL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KLLRJL'] !== null ? autolinker.link(feature.properties['KLLRJL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KONRJL'] !== null ? autolinker.link(feature.properties['KONRJL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KPMSTR'] !== null ? autolinker.link(feature.properties['KPMSTR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LKONOF'] !== null ? autolinker.link(feature.properties['LKONOF'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LKSBSP'] !== null ? autolinker.link(feature.properties['LKSBSP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LKSRTA'] !== null ? autolinker.link(feature.properties['LKSRTA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LLHRRT'] !== null ? autolinker.link(feature.properties['LLHRRT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LOCRJL'] !== null ? autolinker.link(feature.properties['LOCRJL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LBRBHJ'] !== null ? autolinker.link(feature.properties['LBRBHJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LBRJLN'] !== null ? autolinker.link(feature.properties['LBRJLN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['MATRJL'] !== null ? autolinker.link(feature.properties['MATRJL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['MEDRJL'] !== null ? autolinker.link(feature.properties['MEDRJL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SPCRJL'] !== null ? autolinker.link(feature.properties['SPCRJL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['STARJL'] !== null ? autolinker.link(feature.properties['STARJL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TOLRJL'] !== null ? autolinker.link(feature.properties['TOLRJL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['UTKRJL'] !== null ? autolinker.link(feature.properties['UTKRJL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['VLCPRT'] !== null ? autolinker.link(feature.properties['VLCPRT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WLYRJL'] !== null ? autolinker.link(feature.properties['WLYRJL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TGL_SK'] !== null ? autolinker.link(feature.properties['TGL_SK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JLNLYG'] !== null ? autolinker.link(feature.properties['JLNLYG'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KLSRJL'] !== null ? autolinker.link(feature.properties['KLSRJL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Length'] !== null ? autolinker.link(feature.properties['SHAPE_Length'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002dgdbtable_12_0() {
+            return {
+                pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002dgdbtable_12',
+                opacity: 1,
+                color: 'rgba(183,72,75,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002dgdbtable_12');
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002dgdbtable_12').style.zIndex = 412;
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002dgdbtable_12').style['mix-blend-mode'] = 'normal';
+        var layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002dgdbtable_12 = new L.geoJson(json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002dgdbtable_12, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002dgdbtable_12',
+            layerName: 'layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002dgdbtable_12',
+            pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002dgdbtable_12',
+            onEachFeature: pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002dgdbtable_12,
+            style: style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002dgdbtable_12_0,
+        });
+        bounds_group.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002dgdbtable_12);
+        map.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002dgdbtable_12);
+        function pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002cgdbtable_13(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? autolinker.link(feature.properties['FCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? autolinker.link(feature.properties['REMARK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? autolinker.link(feature.properties['METADATA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? autolinker.link(feature.properties['SRS_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JLBTRM'] !== null ? autolinker.link(feature.properties['JLBTRM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JLDTRM'] !== null ? autolinker.link(feature.properties['JLDTRM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KATTRM'] !== null ? autolinker.link(feature.properties['KATTRM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KODTRM'] !== null ? autolinker.link(feature.properties['KODTRM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KONKON'] !== null ? autolinker.link(feature.properties['KONKON'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['MGTTRM'] !== null ? autolinker.link(feature.properties['MGTTRM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PARTRM'] !== null ? autolinker.link(feature.properties['PARTRM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['STATRM'] !== null ? autolinker.link(feature.properties['STATRM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['THBTRM'] !== null ? autolinker.link(feature.properties['THBTRM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['THTTRM'] !== null ? autolinker.link(feature.properties['THTTRM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TIPTRM'] !== null ? autolinker.link(feature.properties['TIPTRM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['THNOPR'] !== null ? autolinker.link(feature.properties['THNOPR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002cgdbtable_13_0() {
+            return {
+                pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002cgdbtable_13',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(141,90,153,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002cgdbtable_13');
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002cgdbtable_13').style.zIndex = 413;
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002cgdbtable_13').style['mix-blend-mode'] = 'normal';
+        var layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002cgdbtable_13 = new L.geoJson(json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002cgdbtable_13, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002cgdbtable_13',
+            layerName: 'layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002cgdbtable_13',
+            pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002cgdbtable_13',
+            onEachFeature: pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002cgdbtable_13,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002cgdbtable_13_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002cgdbtable_13);
+        map.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002cgdbtable_13);
+        function pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002agdbtable_14(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? autolinker.link(feature.properties['FCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? autolinker.link(feature.properties['REMARK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? autolinker.link(feature.properties['METADATA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? autolinker.link(feature.properties['SRS_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JPLPKM'] !== null ? autolinker.link(feature.properties['JPLPKM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KMPPKM'] !== null ? autolinker.link(feature.properties['KMPPKM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PKMKAT'] !== null ? autolinker.link(feature.properties['PKMKAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PKMKODE'] !== null ? autolinker.link(feature.properties['PKMKODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PKMLMT'] !== null ? autolinker.link(feature.properties['PKMLMT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KWKPKM'] !== null ? autolinker.link(feature.properties['KWKPKM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002agdbtable_14_0() {
+            return {
+                pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002agdbtable_14',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(125,139,143,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002agdbtable_14');
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002agdbtable_14').style.zIndex = 414;
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002agdbtable_14').style['mix-blend-mode'] = 'normal';
+        var layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002agdbtable_14 = new L.geoJson(json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002agdbtable_14, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002agdbtable_14',
+            layerName: 'layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002agdbtable_14',
+            pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002agdbtable_14',
+            onEachFeature: pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002agdbtable_14,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002agdbtable_14_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002agdbtable_14);
+        map.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002agdbtable_14);
+        function pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000028gdbtable_15(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? autolinker.link(feature.properties['FCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? autolinker.link(feature.properties['REMARK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? autolinker.link(feature.properties['METADATA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? autolinker.link(feature.properties['SRS_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KODEBP'] !== null ? autolinker.link(feature.properties['KODEBP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['STSPML'] !== null ? autolinker.link(feature.properties['STSPML'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JJGPDF'] !== null ? autolinker.link(feature.properties['JJGPDF'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JLPDDK'] !== null ? autolinker.link(feature.properties['JLPDDK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JNSPDK'] !== null ? autolinker.link(feature.properties['JNSPDK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FGDPDK'] !== null ? autolinker.link(feature.properties['FGDPDK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Length'] !== null ? autolinker.link(feature.properties['SHAPE_Length'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Area'] !== null ? autolinker.link(feature.properties['SHAPE_Area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000028gdbtable_15_0() {
+            return {
+                pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000028gdbtable_15',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(190,207,80,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000028gdbtable_15');
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000028gdbtable_15').style.zIndex = 415;
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000028gdbtable_15').style['mix-blend-mode'] = 'normal';
+        var layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000028gdbtable_15 = new L.geoJson(json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000028gdbtable_15, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000028gdbtable_15',
+            layerName: 'layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000028gdbtable_15',
+            pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000028gdbtable_15',
+            onEachFeature: pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000028gdbtable_15,
+            style: style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000028gdbtable_15_0,
+        });
+        bounds_group.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000028gdbtable_15);
+        map.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000028gdbtable_15);
+        function pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000027gdbtable_16(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? autolinker.link(feature.properties['FCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? autolinker.link(feature.properties['REMARK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? autolinker.link(feature.properties['METADATA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? autolinker.link(feature.properties['SRS_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FGSUSH'] !== null ? autolinker.link(feature.properties['FGSUSH'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRNPDG'] !== null ? autolinker.link(feature.properties['SRNPDG'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Length'] !== null ? autolinker.link(feature.properties['SHAPE_Length'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Area'] !== null ? autolinker.link(feature.properties['SHAPE_Area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000027gdbtable_16_0() {
+            return {
+                pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000027gdbtable_16',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(183,72,75,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000027gdbtable_16');
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000027gdbtable_16').style.zIndex = 416;
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000027gdbtable_16').style['mix-blend-mode'] = 'normal';
+        var layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000027gdbtable_16 = new L.geoJson(json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000027gdbtable_16, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000027gdbtable_16',
+            layerName: 'layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000027gdbtable_16',
+            pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000027gdbtable_16',
+            onEachFeature: pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000027gdbtable_16,
+            style: style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000027gdbtable_16_0,
+        });
+        bounds_group.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000027gdbtable_16);
+        map.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000027gdbtable_16);
+        function pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000026gdbtable_17(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? autolinker.link(feature.properties['FCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? autolinker.link(feature.properties['REMARK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? autolinker.link(feature.properties['METADATA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? autolinker.link(feature.properties['SRS_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TPP'] !== null ? autolinker.link(feature.properties['TPP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000026gdbtable_17_0() {
+            return {
+                pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000026gdbtable_17',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(141,90,153,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000026gdbtable_17');
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000026gdbtable_17').style.zIndex = 417;
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000026gdbtable_17').style['mix-blend-mode'] = 'normal';
+        var layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000026gdbtable_17 = new L.geoJson(json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000026gdbtable_17, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000026gdbtable_17',
+            layerName: 'layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000026gdbtable_17',
+            pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000026gdbtable_17',
+            onEachFeature: pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000026gdbtable_17,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000026gdbtable_17_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000026gdbtable_17);
+        map.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000026gdbtable_17);
+        function pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000025gdbtable_18(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? autolinker.link(feature.properties['FCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? autolinker.link(feature.properties['REMARK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? autolinker.link(feature.properties['METADATA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? autolinker.link(feature.properties['SRS_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KELAS'] !== null ? autolinker.link(feature.properties['KELAS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Length'] !== null ? autolinker.link(feature.properties['SHAPE_Length'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Area'] !== null ? autolinker.link(feature.properties['SHAPE_Area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000025gdbtable_18_0() {
+            return {
+                pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000025gdbtable_18',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(213,180,60,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000025gdbtable_18');
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000025gdbtable_18').style.zIndex = 418;
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000025gdbtable_18').style['mix-blend-mode'] = 'normal';
+        var layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000025gdbtable_18 = new L.geoJson(json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000025gdbtable_18, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000025gdbtable_18',
+            layerName: 'layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000025gdbtable_18',
+            pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000025gdbtable_18',
+            onEachFeature: pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000025gdbtable_18,
+            style: style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000025gdbtable_18_0,
+        });
+        bounds_group.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000025gdbtable_18);
+        map.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000025gdbtable_18);
+        function pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000024gdbtable_19(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? autolinker.link(feature.properties['FCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? autolinker.link(feature.properties['REMARK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? autolinker.link(feature.properties['METADATA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? autolinker.link(feature.properties['SRS_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FGSPRP'] !== null ? autolinker.link(feature.properties['FGSPRP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAYERa'] !== null ? autolinker.link(feature.properties['LAYERa'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Length'] !== null ? autolinker.link(feature.properties['SHAPE_Length'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Area'] !== null ? autolinker.link(feature.properties['SHAPE_Area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000024gdbtable_19_0() {
+            return {
+                pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000024gdbtable_19',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(125,139,143,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000024gdbtable_19');
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000024gdbtable_19').style.zIndex = 419;
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000024gdbtable_19').style['mix-blend-mode'] = 'normal';
+        var layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000024gdbtable_19 = new L.geoJson(json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000024gdbtable_19, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000024gdbtable_19',
+            layerName: 'layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000024gdbtable_19',
+            pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000024gdbtable_19',
+            onEachFeature: pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000024gdbtable_19,
+            style: style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000024gdbtable_19_0,
+        });
+        bounds_group.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000024gdbtable_19);
+        map.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000024gdbtable_19);
+        function pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000020gdbtable_20(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? autolinker.link(feature.properties['FCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? autolinker.link(feature.properties['REMARK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? autolinker.link(feature.properties['METADATA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? autolinker.link(feature.properties['SRS_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JPLYRS'] !== null ? autolinker.link(feature.properties['JPLYRS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['RSALAMAT'] !== null ? autolinker.link(feature.properties['RSALAMAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TIPRST'] !== null ? autolinker.link(feature.properties['TIPRST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000020gdbtable_20_0() {
+            return {
+                pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000020gdbtable_20',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(141,90,153,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000020gdbtable_20');
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000020gdbtable_20').style.zIndex = 420;
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000020gdbtable_20').style['mix-blend-mode'] = 'normal';
+        var layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000020gdbtable_20 = new L.geoJson(json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000020gdbtable_20, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000020gdbtable_20',
+            layerName: 'layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000020gdbtable_20',
+            pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000020gdbtable_20',
+            onEachFeature: pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000020gdbtable_20,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000020gdbtable_20_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000020gdbtable_20);
+        map.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000020gdbtable_20);
+        function pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000001bgdbtable_21(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? autolinker.link(feature.properties['FCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? autolinker.link(feature.properties['REMARK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? autolinker.link(feature.properties['METADATA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? autolinker.link(feature.properties['SRS_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KODEBP'] !== null ? autolinker.link(feature.properties['KODEBP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['STSPML'] !== null ? autolinker.link(feature.properties['STSPML'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JJGPDF'] !== null ? autolinker.link(feature.properties['JJGPDF'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JLPDDK'] !== null ? autolinker.link(feature.properties['JLPDDK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JNSPDK'] !== null ? autolinker.link(feature.properties['JNSPDK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FGDPDK'] !== null ? autolinker.link(feature.properties['FGDPDK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000001bgdbtable_21_0() {
+            return {
+                pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000001bgdbtable_21',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(183,72,75,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000001bgdbtable_21');
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000001bgdbtable_21').style.zIndex = 421;
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000001bgdbtable_21').style['mix-blend-mode'] = 'normal';
+        var layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000001bgdbtable_21 = new L.geoJson(json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000001bgdbtable_21, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000001bgdbtable_21',
+            layerName: 'layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000001bgdbtable_21',
+            pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000001bgdbtable_21',
+            onEachFeature: pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000001bgdbtable_21,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000001bgdbtable_21_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000001bgdbtable_21);
+        map.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000001bgdbtable_21);
+        function pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000015gdbtable_22(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? autolinker.link(feature.properties['FCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ELEVAS'] !== null ? autolinker.link(feature.properties['ELEVAS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? autolinker.link(feature.properties['REMARK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? autolinker.link(feature.properties['SRS_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? autolinker.link(feature.properties['METADATA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Length'] !== null ? autolinker.link(feature.properties['SHAPE_Length'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000015gdbtable_22_0() {
+            return {
+                pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000015gdbtable_22',
+                opacity: 1,
+                color: 'rgba(183,72,75,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000015gdbtable_22');
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000015gdbtable_22').style.zIndex = 422;
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000015gdbtable_22').style['mix-blend-mode'] = 'normal';
+        var layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000015gdbtable_22 = new L.geoJson(json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000015gdbtable_22, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000015gdbtable_22',
+            layerName: 'layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000015gdbtable_22',
+            pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000015gdbtable_22',
+            onEachFeature: pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000015gdbtable_22,
+            style: style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000015gdbtable_22_0,
+        });
+        bounds_group.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000015gdbtable_22);
+        map.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000015gdbtable_22);
+        function pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000000egdbtable_23(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(feature.properties['NAMOBJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? autolinker.link(feature.properties['FCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? autolinker.link(feature.properties['REMARK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? autolinker.link(feature.properties['METADATA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? autolinker.link(feature.properties['SRS_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADATGL'] !== null ? autolinker.link(feature.properties['ADATGL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FNGAIR'] !== null ? autolinker.link(feature.properties['FNGAIR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JNSSNG'] !== null ? autolinker.link(feature.properties['JNSSNG'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KLSSNG'] !== null ? autolinker.link(feature.properties['KLSSNG'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LTKSGI'] !== null ? autolinker.link(feature.properties['LTKSGI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['UKRSGI'] !== null ? autolinker.link(feature.properties['UKRSGI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAYER'] !== null ? autolinker.link(feature.properties['LAYER'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Length'] !== null ? autolinker.link(feature.properties['SHAPE_Length'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Area'] !== null ? autolinker.link(feature.properties['SHAPE_Area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000000egdbtable_23_0() {
+            return {
+                pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000000egdbtable_23',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(141,90,153,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000000egdbtable_23');
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000000egdbtable_23').style.zIndex = 423;
+        map.getPane('pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000000egdbtable_23').style['mix-blend-mode'] = 'normal';
+        var layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000000egdbtable_23 = new L.geoJson(json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000000egdbtable_23, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000000egdbtable_23',
+            layerName: 'layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000000egdbtable_23',
+            pane: 'pane_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000000egdbtable_23',
+            onEachFeature: pop_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000000egdbtable_23,
+            style: style_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000000egdbtable_23_0,
+        });
+        bounds_group.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000000egdbtable_23);
+        map.addLayer(layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000000egdbtable_23);
+        var overlaysTree = [
+            {label: '<img src="legend/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000000egdbtable_23.png" /> Purwakarta — KAB PURWAKARTA/RBI25K_KAB_PURWAKARTA_KUGI50_20221231.gdb/a0000000e.gdbtable', layer: layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000000egdbtable_23},
+            {label: '<img src="legend/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000015gdbtable_22.png" /> Purwakarta — KAB PURWAKARTA/RBI25K_KAB_PURWAKARTA_KUGI50_20221231.gdb/a00000015.gdbtable', layer: layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000015gdbtable_22},
+            {label: '<img src="legend/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000001bgdbtable_21.png" /> Purwakarta — KAB PURWAKARTA/RBI25K_KAB_PURWAKARTA_KUGI50_20221231.gdb/a0000001b.gdbtable', layer: layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000001bgdbtable_21},
+            {label: '<img src="legend/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000020gdbtable_20.png" /> Purwakarta — KAB PURWAKARTA/RBI25K_KAB_PURWAKARTA_KUGI50_20221231.gdb/a00000020.gdbtable', layer: layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000020gdbtable_20},
+            {label: '<img src="legend/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000024gdbtable_19.png" /> Purwakarta — KAB PURWAKARTA/RBI25K_KAB_PURWAKARTA_KUGI50_20221231.gdb/a00000024.gdbtable', layer: layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000024gdbtable_19},
+            {label: '<img src="legend/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000025gdbtable_18.png" /> Purwakarta — KAB PURWAKARTA/RBI25K_KAB_PURWAKARTA_KUGI50_20221231.gdb/a00000025.gdbtable', layer: layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000025gdbtable_18},
+            {label: '<img src="legend/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000026gdbtable_17.png" /> Purwakarta — KAB PURWAKARTA/RBI25K_KAB_PURWAKARTA_KUGI50_20221231.gdb/a00000026.gdbtable', layer: layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000026gdbtable_17},
+            {label: '<img src="legend/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000027gdbtable_16.png" /> Purwakarta — KAB PURWAKARTA/RBI25K_KAB_PURWAKARTA_KUGI50_20221231.gdb/a00000027.gdbtable', layer: layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000027gdbtable_16},
+            {label: '<img src="legend/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000028gdbtable_15.png" /> Purwakarta — KAB PURWAKARTA/RBI25K_KAB_PURWAKARTA_KUGI50_20221231.gdb/a00000028.gdbtable', layer: layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000028gdbtable_15},
+            {label: '<img src="legend/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002agdbtable_14.png" /> Purwakarta — KAB PURWAKARTA/RBI25K_KAB_PURWAKARTA_KUGI50_20221231.gdb/a0000002a.gdbtable', layer: layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002agdbtable_14},
+            {label: '<img src="legend/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002cgdbtable_13.png" /> Purwakarta — KAB PURWAKARTA/RBI25K_KAB_PURWAKARTA_KUGI50_20221231.gdb/a0000002c.gdbtable', layer: layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002cgdbtable_13},
+            {label: '<img src="legend/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002dgdbtable_12.png" /> Purwakarta — KAB PURWAKARTA/RBI25K_KAB_PURWAKARTA_KUGI50_20221231.gdb/a0000002d.gdbtable', layer: layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000002dgdbtable_12},
+            {label: '<img src="legend/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000031gdbtable_11.png" /> Purwakarta — KAB PURWAKARTA/RBI25K_KAB_PURWAKARTA_KUGI50_20221231.gdb/a00000031.gdbtable', layer: layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000031gdbtable_11},
+            {label: '<img src="legend/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000032gdbtable_10.png" /> Purwakarta — KAB PURWAKARTA/RBI25K_KAB_PURWAKARTA_KUGI50_20221231.gdb/a00000032.gdbtable', layer: layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000032gdbtable_10},
+            {label: '<img src="legend/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000033gdbtable_9.png" /> Purwakarta — KAB PURWAKARTA/RBI25K_KAB_PURWAKARTA_KUGI50_20221231.gdb/a00000033.gdbtable', layer: layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000033gdbtable_9},
+            {label: '<img src="legend/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000034gdbtable_8.png" /> Purwakarta — KAB PURWAKARTA/RBI25K_KAB_PURWAKARTA_KUGI50_20221231.gdb/a00000034.gdbtable', layer: layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000034gdbtable_8},
+            {label: '<img src="legend/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000036gdbtable_7.png" /> Purwakarta — KAB PURWAKARTA/RBI25K_KAB_PURWAKARTA_KUGI50_20221231.gdb/a00000036.gdbtable', layer: layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000036gdbtable_7},
+            {label: '<img src="legend/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000038gdbtable_6.png" /> Purwakarta — KAB PURWAKARTA/RBI25K_KAB_PURWAKARTA_KUGI50_20221231.gdb/a00000038.gdbtable', layer: layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000038gdbtable_6},
+            {label: '<img src="legend/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000039gdbtable_5.png" /> Purwakarta — KAB PURWAKARTA/RBI25K_KAB_PURWAKARTA_KUGI50_20221231.gdb/a00000039.gdbtable', layer: layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000039gdbtable_5},
+            {label: '<img src="legend/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003agdbtable_4.png" /> Purwakarta — KAB PURWAKARTA/RBI25K_KAB_PURWAKARTA_KUGI50_20221231.gdb/a0000003a.gdbtable', layer: layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003agdbtable_4},
+            {label: '<img src="legend/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003egdbtable_3.png" /> Purwakarta — KAB PURWAKARTA/RBI25K_KAB_PURWAKARTA_KUGI50_20221231.gdb/a0000003e.gdbtable', layer: layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba0000003egdbtable_3},
+            {label: '<img src="legend/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000041gdbtable_2.png" /> Purwakarta — KAB PURWAKARTA/RBI25K_KAB_PURWAKARTA_KUGI50_20221231.gdb/a00000041.gdbtable', layer: layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000041gdbtable_2},
+            {label: '<img src="legend/PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000042gdbtable_1.png" /> Purwakarta — KAB PURWAKARTA/RBI25K_KAB_PURWAKARTA_KUGI50_20221231.gdb/a00000042.gdbtable', layer: layer_PurwakartaKABPURWAKARTARBI25K_KAB_PURWAKARTA_KUGI50_20221231gdba00000042gdbtable_1},
+            {label: "OpenStreetMap", layer: layer_OpenStreetMap_0},]
+        var lay = L.control.layers.tree(null, overlaysTree,{
+            //namedToggle: true,
+            //selectorBack: false,
+            //closedSymbol: '&#8862; &#x1f5c0;',
+            //openedSymbol: '&#8863; &#x1f5c1;',
+            //collapseAll: 'Collapse all',
+            //expandAll: 'Expand all',
+            collapsed: true,
+        });
+        lay.addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
